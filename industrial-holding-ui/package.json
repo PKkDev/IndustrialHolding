@@ -2,7 +2,7 @@
   "name": "industrial-holding-ui",
   "version": "0.0.0",
   "scripts": {
-    "serve": "ng ",
+    "serve": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "ng-openapi-gen": "ng-openapi-gen --input http://localhost:5277/swagger/v1/swagger.json --output src/app/api"

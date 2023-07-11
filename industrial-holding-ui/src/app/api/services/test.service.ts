@@ -10,6 +10,7 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 import { RequestBuilder } from '../request-builder';
 
+import { WagonItem } from '../models/wagon-item';
 
 @Injectable({ providedIn: 'root' })
 export class TestService extends BaseService {
@@ -30,17 +31,17 @@ export class TestService extends BaseService {
     params?: {
     },
     context?: HttpContext
-  ): Observable<StrictHttpResponse<void>> {
+  ): Observable<StrictHttpResponse<Array<WagonItem>>> {
     const rb = new RequestBuilder(this.rootUrl, TestService.ApiTestListGetPath, 'get');
     if (params) {
     }
 
     return this.http.request(
-      rb.build({ responseType: 'text', accept: '*/*', context })
+      rb.build({ responseType: 'json', accept: 'application/json', context })
     ).pipe(
       filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<Array<WagonItem>>;
       })
     );
   }
@@ -55,9 +56,9 @@ export class TestService extends BaseService {
     params?: {
     },
     context?: HttpContext
-  ): Observable<void> {
+  ): Observable<Array<WagonItem>> {
     return this.apiTestListGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<Array<WagonItem>>): Array<WagonItem> => r.body)
     );
   }
 
@@ -73,8 +74,8 @@ export class TestService extends BaseService {
   apiTestParsePost$Response(
     params?: {
       body?: {
-        'file'?: Blob;
-      }
+'file'?: Blob;
+}
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<void>> {
@@ -102,8 +103,8 @@ export class TestService extends BaseService {
   apiTestParsePost(
     params?: {
       body?: {
-        'file'?: Blob;
-      }
+'file'?: Blob;
+}
     },
     context?: HttpContext
   ): Observable<void> {

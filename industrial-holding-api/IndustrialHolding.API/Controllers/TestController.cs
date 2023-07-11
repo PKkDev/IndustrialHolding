@@ -9,8 +9,40 @@ using System.Net.Mime;
 
 namespace IndustrialHolding.API.Controllers
 {
+    public class WagonItem
+    {
+        public required long Number { get; set; }
+        public List<VoyagesItem> Voyages { get; set; }
+        public WagonItem()
+        {
+            Voyages = new();
+        }
+    }
+    public class VoyagesItem
+    {
+        public required DateTime StartDate { get; set; }
+        public string StartStation { get; set; }
+        public string? EndStation { get; set; }
+        public List<OperationsItem> Operations { get; set; }
+        public VoyagesItem()
+        {
+            Operations = new();
+        }
+    }
+    public class OperationsItem
+    {
+        public string Name { get; set; }
+        public string OperStation { get; set; }
+        public DateTime OperDate { get; set; }
+        public double DaysWithoutMovement { get; set; }
+        public double RemainingDistance { get; set; }
+    }
+
+
     [Route("api/test")]
     [ApiController]
+    //[Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     public class TestController : ControllerBase
     {
         private readonly DataContext _context;
@@ -25,29 +57,31 @@ namespace IndustrialHolding.API.Controllers
         }
 
         [HttpGet("list")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(IEnumerable<WagonItem>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Do()
         {
             var list = await _context.Wagon
                 .Include(x => x.Voyages)
                 .ThenInclude(x => x.Operations)
-                .Select(x => new
+                .Select(x => new WagonItem
                 {
-                    x.Number,
-                    Voyages = x.Voyages.Select(y => new
+                    Number = x.Number,
+                    Voyages = x.Voyages.Select(y => new VoyagesItem
                     {
-                        y.StartDate,
-                        y.StartStation,
-                        y.EndStation,
-                        Operations = y.Operations.Select(z => new
+                        StartDate = y.StartDate,
+                        StartStation = y.StartStation,
+                        EndStation = y.EndStation,
+                        Operations = y.Operations.Select(z => new OperationsItem
                         {
-                            z.Name,
-                            z.OperStation,
-                            z.OperDate,
-                            z.DaysWithoutMovement,
-                            z.RemainingDistance
+                            Name = z.Name,
+                            OperStation = z.OperStation,
+                            OperDate = z.OperDate,
+                            DaysWithoutMovement = z.DaysWithoutMovement,
+                            RemainingDistance = z.RemainingDistance
                         })
+                        .ToList()
                     })
+                    .ToList()
                 })
                 .ToListAsync();
 
@@ -55,6 +89,7 @@ namespace IndustrialHolding.API.Controllers
         }
 
         [HttpPost("parse")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(IFormFile file)
         {
             string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
