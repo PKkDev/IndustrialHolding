@@ -1,0 +1,20 @@
+<div *ngIf="wagon">
+
+  <div class="card ant-card" *ngFor="let voyage of wagon.voyages">
+
+    Время отправления: {{voyage.startDate | date: 'dd.MM.yyyy HH:mm'}}
+    <br>
+    Путь: {{voyage.startStation}} -> {{voyage.endStation}}
+    <hr>
+
+    <div *ngFor="let operation of voyage.operations">
+      {{operation.operDate | date: 'dd.MM.yyyy HH:mm'}}
+      {{operation.name}}
+      {{operation.operStation}}
+      {{operation.remainingDistance}}
+      {{operation.daysWithoutMovement}}
+    </div>
+
+  </div>
+
+</div>

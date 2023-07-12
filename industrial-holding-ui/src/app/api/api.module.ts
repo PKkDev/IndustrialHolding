@@ -4,6 +4,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { FilesService } from './services/files.service';
 import { TestService } from './services/test.service';
 
 /**
@@ -14,6 +15,7 @@ import { TestService } from './services/test.service';
   exports: [],
   declarations: [],
   providers: [
+    FilesService,
     TestService,
     ApiConfiguration
   ],

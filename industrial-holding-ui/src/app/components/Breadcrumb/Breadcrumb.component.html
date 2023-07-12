@@ -1,0 +1,11 @@
+<div class="breadcrumbs-line">
+
+  <div class="breadcrumb" *ngFor="let breadcrumb of breadcrumbs"
+    [ngClass]="{'isActive': breadcrumb.isActive, 'canRoute': breadcrumb.path}" [routerLink]="breadcrumb.path">
+    {{breadcrumb.title}}
+    <ng-container *ngIf="!breadcrumb.isActive">
+      &nbsp;&nbsp;/&nbsp;&nbsp;
+    </ng-container>
+  </div>
+
+</div>

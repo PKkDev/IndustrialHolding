@@ -1,0 +1,13 @@
+.layout-body {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    .content {
+        padding: 5px;
+        box-sizing: border-box;
+        background: #ececec;
+        height: 100%;
+        width: calc(100% - 250px);
+    }
+}

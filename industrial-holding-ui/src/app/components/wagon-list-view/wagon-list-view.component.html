@@ -1,0 +1,26 @@
+<!-- <div *ngFor="let wagon of wagons">
+
+  {{wagon.number}}
+
+  <div *ngFor="let voyage of wagon.voyages">
+    {{voyage.startDate}}
+    {{voyage.startStation}}
+    {{voyage.endStation}}
+
+    <div *ngFor="let operation of voyage.operations">
+      {{operation.name}}
+      {{operation.operDate}}
+      {{operation.operStation}}
+      {{operation.remainingDistance}}
+      {{operation.daysWithoutMovement}}
+    </div>
+
+  </div>
+
+</div> -->
+
+<div class="row">
+  <div class="card ant-card" *ngFor="let wagon of wagons" (click)="onGoToVoyages(wagon)">
+    {{wagon.number}}({{wagon.voyages?.length}})
+  </div>
+</div>

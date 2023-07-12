@@ -2,7 +2,8 @@
 /* eslint-disable */
 import { OperationsItem } from './operations-item';
 export interface VoyagesItem {
-  endStation?: null | string;
+  endStation?: string;
+  id?: number;
   operations?: Array<OperationsItem>;
   startDate?: string;
   startStation?: string;

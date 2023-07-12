@@ -4,14 +4,13 @@ using System.Net.Mime;
 
 namespace IndustrialHolding.API.Controllers
 {
-    [Route("error")]
     [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     public class ErrorController : ControllerBase
     {
         public ErrorController() { }
 
-        [HttpGet]
+        [Route("/error")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public IActionResult GetExceptionInfo()

@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WagonItem } from 'src/app/api/models';
 import { TestService } from 'src/app/api/services';
 
 @Component({
-  selector: 'app-list-test-view',
-  templateUrl: './list-test-view.component.html',
-  styleUrls: ['./list-test-view.component.scss']
+  selector: 'app-wagon-list-view',
+  templateUrl: './wagon-list-view.component.html',
+  styleUrls: ['./wagon-list-view.component.scss']
 })
-export class ListTestViewComponent implements OnInit {
+export class WagonListViewComponent implements OnInit {
+
+  public wagons: WagonItem[] = [];
 
   constructor(
+    private router: Router,
     private testService: TestService
   ) { }
 
@@ -17,6 +21,7 @@ export class ListTestViewComponent implements OnInit {
 
     this.testService.apiTestListGet().subscribe({
       next: (value: WagonItem[]) => {
+        this.wagons = value;
         console.log('value', value);
       },
       error: (err) => {
@@ -24,6 +29,10 @@ export class ListTestViewComponent implements OnInit {
 
       },
     })
+  }
+
+  public onGoToVoyages(wagon: WagonItem) {
+    this.router.navigate(['wagons', wagon.number])
   }
 
 }

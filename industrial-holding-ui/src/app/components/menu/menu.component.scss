@@ -1,0 +1,30 @@
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    height: 100%; 
+
+    li {
+        padding: 0 24px 0 0;
+        margin-bottom: 5px;
+        height: 35px;
+        cursor: pointer;
+
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            line-height: 35px;
+            text-align: left;
+            color: #000;
+            width: 100%;
+        }
+    }
+
+    .active {
+        background: #e6f7ff;
+        a {
+            color: #1890ff;
+        }
+    }
+}

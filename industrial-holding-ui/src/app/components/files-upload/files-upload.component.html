@@ -1,0 +1,9 @@
+<input [hidden]="true" #fileInput type="file" accept=".xlsx" multiple (change)="onFileSelectorChange($event)">
+
+<button class="ant-btn" (click)="onSelectFile()">Добавить файл</button>
+<button class="ant-btn ant-btn-primary" [disabled]="files.length == 0" (click)="onSendFile()">Отправить файлы</button>
+
+<div *ngFor="let file of files">
+  {{file.name}}
+  {{file.size}}
+</div>

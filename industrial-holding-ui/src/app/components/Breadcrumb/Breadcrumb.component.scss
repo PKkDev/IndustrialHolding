@@ -1,0 +1,19 @@
+.breadcrumbs-line {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    margin-bottom: 5px;
+
+    .breadcrumb {
+        color: #00000073;
+        font-size: 14px;
+    }
+
+    .isActive {
+        color: #000000d9;
+    }
+
+    .canRoute {
+        cursor: pointer;
+    }
+}

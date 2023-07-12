@@ -4,12 +4,26 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiModule } from './api/api.module';
-import { ListTestViewComponent } from './components/list-test-view/list-test-view.component';
+import { LayoutMainComponent } from './components/layout-main/layout-main.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { FilesListComponent } from './components/files-list/files-list.component';
+import { FilesUploadComponent } from './components/files-upload/files-upload.component';
+import { WagonListViewComponent } from './components/wagon-list-view/wagon-list-view.component';
+import { WagonVoyagesViewComponent } from './components/wagon-voyages-view/wagon-voyages-view.component';
+import { BreadcrumbComponent } from './components/Breadcrumb/Breadcrumb.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListTestViewComponent
+    LayoutMainComponent,
+    HeaderComponent,
+    MenuComponent,
+    WagonListViewComponent,
+    FilesUploadComponent,
+    FilesListComponent,
+    WagonVoyagesViewComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,
