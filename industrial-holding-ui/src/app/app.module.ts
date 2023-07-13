@@ -12,6 +12,8 @@ import { FilesUploadComponent } from './components/files-upload/files-upload.com
 import { WagonListViewComponent } from './components/wagon-list-view/wagon-list-view.component';
 import { WagonVoyagesViewComponent } from './components/wagon-voyages-view/wagon-voyages-view.component';
 import { BreadcrumbComponent } from './components/Breadcrumb/Breadcrumb.component';
+import { ByteConverterPipe } from './pipes/byte-converter.pipe';
+import { HttpInterceptorProviders } from './interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { BreadcrumbComponent } from './components/Breadcrumb/Breadcrumb.componen
     FilesUploadComponent,
     FilesListComponent,
     WagonVoyagesViewComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ByteConverterPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import { BreadcrumbComponent } from './components/Breadcrumb/Breadcrumb.componen
     HttpClientModule,
     ApiModule.forRoot({ rootUrl: 'https://localhost:7065' }),
   ],
-  providers: [],
+  providers: [
+    HttpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

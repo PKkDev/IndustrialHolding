@@ -1,4 +1,19 @@
-div {
-    cursor: pointer;
-    margin-bottom: 15px;
+.file-item-container {
+    overflow: auto;
+    max-height: 600px;
+
+    .file-item {
+        display: flex;
+        margin-bottom: 15px;
+        gap: 5px;
+
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 350px;
+            display: flex;
+            align-items: center;
+        }
+    }
 }

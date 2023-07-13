@@ -4,12 +4,25 @@ html,
 body {
     --ant-primary-color: #1890ff;
     --ant-primary-color-hover: #40a9ff;
+    --ant-error-color: #ff4d4f;
+    --ant-error-color-hover: #ff7875;
+    --ant-error-color-deprecated-bg: #fff2f0;
+    --ant-error-color-deprecated-border: #ffccc7;
 
     font-family: "Roboto", sans-serif;
     height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
+}
+
+.dropdown-menu-toggle {
+    background: #fff;
+    color: #000;
+}
+.dropdown-menu {
+    background: #fff;
+    color: #000;
 }
 
 // buttons
@@ -35,16 +48,33 @@ body {
     color: #000000d9;
     border-color: #d9d9d9;
     background: #fff;
-}
 
-.ant-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+    .span-icon {
+        display: inline-block;
+        color: inherit;
+        font-style: normal;
+        line-height: 0;
+        text-align: center;
+        text-transform: none;
+        vertical-align: -0.125em;
+        text-rendering: optimizelegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-.ant-btn:not(:disabled):hover {
-    color: var(--ant-primary-color);
-    border-color: var(--ant-primary-color);
+    .loading {
+        animation: loadingCircle 1s infinite linear;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+        color: var(--ant-primary-color);
+        border-color: var(--ant-primary-color);
+    }
 }
 
 .ant-btn-primary {
@@ -53,12 +83,33 @@ body {
     background: var(--ant-primary-color);
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px #0000000b;
+
+    &:not(:disabled):hover {
+        border-color: var(--ant-primary-color-hover);
+        background: var(--ant-primary-color-hover);
+    }
 }
 
-.ant-btn-primary:not(:disabled):hover {
-    border-color: var(--ant-primary-color-hover);
-    background: var(--ant-primary-color-hover);
+.ant-btn-dangerous {
+    color: #fff;
+    border-color: var(--ant-error-color);
+    background: var(--ant-error-color);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px #0000000b;
+
+    &:not(:disabled):hover {
+        color: #fff;
+        border-color: var(--ant-error-color-hover);
+        background: var(--ant-error-color-hover);
+    }
 }
+
+@keyframes loadingCircle {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 // buttons
 
 .ant-card {
@@ -74,12 +125,34 @@ body {
     position: relative;
     background: #fff;
     border-radius: 2px;
+
+    &:hover {
+        border-color: transparent;
+        box-shadow:
+            0 1px 2px -2px #00000029,
+            0 3px 6px #0000001f,
+            0 5px 12px 4px #00000017;
+    }
 }
 
-.ant-card:hover {
-    border-color: transparent;
-    box-shadow:
-        0 1px 2px -2px #00000029,
-        0 3px 6px #0000001f,
-        0 5px 12px 4px #00000017;
+.ant-alert {
+    box-sizing: border-box;
+    margin: 0;
+    color: #000000d9;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum";
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    word-wrap: break-word;
+    border-radius: 2px;
+}
+
+.ant-alert-error {
+    background-color: var(--ant-error-color-deprecated-bg);
+    border: 1px solid var(--ant-error-color-deprecated-border);
 }

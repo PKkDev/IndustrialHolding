@@ -65,23 +65,27 @@ namespace IndustrialHolding.API.Controllers
                 {
                     Id = x.Id,
                     Number = x.Number,
-                    Voyages = x.Voyages.Select(y => new VoyagesItem
-                    {
-                        Id = y.Id,
-                        StartDate = y.StartDate,
-                        StartStation = y.StartStation,
-                        EndStation = y.EndStation ?? "Не указано",
-                        Operations = y.Operations.Select(z => new OperationsItem
+                    Voyages = x.Voyages
+                        .OrderByDescending(x => x.StartDate)
+                        .Select(y => new VoyagesItem
                         {
-                            Id = z.Id,
-                            Name = z.Name,
-                            OperStation = z.OperStation,
-                            OperDate = z.OperDate,
-                            DaysWithoutMovement = z.DaysWithoutMovement,
-                            RemainingDistance = z.RemainingDistance
-                        })
+                            Id = y.Id,
+                            StartDate = y.StartDate,
+                            StartStation = y.StartStation,
+                            EndStation = y.EndStation ?? "Не указано",
+                            Operations = y.Operations
+                                .OrderBy(x => x.OperDate)
+                                .Select(z => new OperationsItem
+                                {
+                                    Id = z.Id,
+                                    Name = z.Name,
+                                    OperStation = z.OperStation,
+                                    OperDate = z.OperDate,
+                                    DaysWithoutMovement = z.DaysWithoutMovement,
+                                    RemainingDistance = z.RemainingDistance
+                                })
                         .ToList()
-                    })
+                        })
                     .ToList()
                 })
                 .ToListAsync();

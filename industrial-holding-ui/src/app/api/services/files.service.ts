@@ -108,6 +108,53 @@ export class FilesService extends BaseService {
     );
   }
 
+  /** Path part for operation `apiFilesRemoveGet()` */
+  static readonly ApiFilesRemoveGetPath = '/api/files/remove';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiFilesRemoveGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFilesRemoveGet$Response(
+    params?: {
+      fileName?: string;
+    },
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<void>> {
+    const rb = new RequestBuilder(this.rootUrl, FilesService.ApiFilesRemoveGetPath, 'get');
+    if (params) {
+      rb.query('fileName', params.fileName, {"style":"form"});
+    }
+
+    return this.http.request(
+      rb.build({ responseType: 'text', accept: '*/*', context })
+    ).pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiFilesRemoveGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFilesRemoveGet(
+    params?: {
+      fileName?: string;
+    },
+    context?: HttpContext
+  ): Observable<void> {
+    return this.apiFilesRemoveGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
   /** Path part for operation `apiFilesUploadPost()` */
   static readonly ApiFilesUploadPostPath = '/api/files/upload';
 

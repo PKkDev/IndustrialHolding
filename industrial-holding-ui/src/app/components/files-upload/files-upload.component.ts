@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FilesService } from 'src/app/api/services';
 import { firstValueFrom } from 'rxjs';
+import { ApiError } from 'src/app/interceptor/model';
+import { FileUploadModel, FileUploadState } from './model';
 
 @Component({
   selector: 'app-files-upload',
@@ -11,12 +13,11 @@ export class FilesUploadComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
-  public files: File[] = [];
+  public files: FileUploadModel[] = [];
 
   constructor(private api: FilesService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public onSelectFile() {
     this.fileInput?.nativeElement.click();
@@ -26,23 +27,35 @@ export class FilesUploadComponent implements OnInit {
     this.files = [];
     const files = event.target.files;
     for (const file of files) {
-      this.files.push(file);
+      this.files.push({
+        file: file,
+        state: FileUploadState.Wait,
+      });
     }
   }
 
-  public async onSendFile() {
+  public async onSendAllFile() {
     for (const file of this.files) {
-      const request = this.api.apiFilesUploadPost({
-        body: { files: [file] }
-      });
-      await firstValueFrom(request)
-        .then(value => {
-          console.log(value);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      if (file.state != FileUploadState.Done)
+        await this.onSendFile(file);
     }
+  }
+
+  public async onSendFile(file: FileUploadModel) {
+    file.state = FileUploadState.InProcess;
+    const request = this.api.apiFilesUploadPost({
+      body: { files: [file.file] }
+    });
+    await firstValueFrom(request)
+      .then(value => {
+        file.state = FileUploadState.Done;
+        console.log(value);
+      })
+      .catch((error: ApiError) => {
+        file.state = FileUploadState.Error;
+        file.error = error.detail;
+      });
+
   }
 
 }

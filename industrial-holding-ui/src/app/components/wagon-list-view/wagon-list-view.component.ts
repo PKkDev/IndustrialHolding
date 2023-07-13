@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { WagonItem } from 'src/app/api/models';
 import { TestService } from 'src/app/api/services';
 
@@ -8,9 +9,11 @@ import { TestService } from 'src/app/api/services';
   templateUrl: './wagon-list-view.component.html',
   styleUrls: ['./wagon-list-view.component.scss']
 })
-export class WagonListViewComponent implements OnInit {
+export class WagonListViewComponent implements OnInit, OnDestroy {
 
   public wagons: WagonItem[] = [];
+
+  private loadDataSubs?: Subscription;
 
   constructor(
     private router: Router,
@@ -18,17 +21,21 @@ export class WagonListViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadData();
+  }
 
-    this.testService.apiTestListGet().subscribe({
-      next: (value: WagonItem[]) => {
-        this.wagons = value;
-        console.log('value', value);
-      },
-      error: (err) => {
-        console.log('err', err);
+  ngOnDestroy() {
+    this.loadDataSubs?.unsubscribe();
+  }
 
-      },
-    })
+  private loadData() {
+    this.loadDataSubs = this.testService.apiTestListGet()
+      .subscribe({
+        next: (value: WagonItem[]) => {
+          this.wagons = value;
+        },
+        error: (err) => { },
+      })
   }
 
   public onGoToVoyages(wagon: WagonItem) {

@@ -1,6 +1,6 @@
 <div *ngIf="wagon">
 
-  <div class="card ant-card" *ngFor="let voyage of wagon.voyages">
+  <div class="card ant-card" *ngFor="let voyage of wagon.voyages" (click)="onView(voyage)">
 
     Время отправления: {{voyage.startDate | date: 'dd.MM.yyyy HH:mm'}}
     <br>
@@ -18,3 +18,5 @@
   </div>
 
 </div>
+
+<div id="map" style="width: 600px; height: 400px"></div>

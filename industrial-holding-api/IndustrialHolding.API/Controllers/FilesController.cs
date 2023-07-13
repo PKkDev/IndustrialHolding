@@ -11,6 +11,7 @@ namespace IndustrialHolding.API.Controllers
 {
     [Route("api/files")]
     [ApiController]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public class FilesController : ControllerBase
     {
         private readonly DataContext _context;
@@ -26,7 +27,7 @@ namespace IndustrialHolding.API.Controllers
 
         [HttpGet("list")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
         public IActionResult List()
         {
             string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
@@ -45,7 +46,7 @@ namespace IndustrialHolding.API.Controllers
 
         [HttpGet("download")]
         [Produces(MediaTypeNames.Application.Octet)]
-        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
         public IActionResult Download([FromQuery] string fileName)
         {
             string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
@@ -61,11 +62,34 @@ namespace IndustrialHolding.API.Controllers
             var file = files.First();
             var bytes = System.IO.File.ReadAllBytes(file.FullName);
             return File(bytes, MediaTypeNames.Application.Octet, file.Name);
+            // return File(bytes, "application/vnd.ms-excel");
+        }
+
+        [HttpGet("remove")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Remove([FromQuery] string fileName)
+        {
+            string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
+            DirectoryInfo fileDir = new(filesPath);
+            if (!fileDir.Exists)
+                throw new Exception("файл не найден");
+
+            var files = fileDir.GetFiles(fileName, SearchOption.AllDirectories);
+
+            if (!files.Any())
+                throw new Exception("файл не найден");
+
+            var file = files.First();
+            file.Delete();
+
+            return Ok();
         }
 
         [HttpPost("upload")]
-        [Consumes("multipart/form-data")]
+        [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload([FromForm] IFormFileCollection files)
         {
             var file = files[0];
