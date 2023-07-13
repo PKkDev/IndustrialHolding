@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.private.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.private.json"), optional: false, reloadOnChange: true);
 
 builder.Services.AddControllers()
     .AddJsonOptions(option =>

@@ -16,7 +16,10 @@ export class AppComponent {
     if (isDevMode()) {
       apiConfiguration.rootUrl = 'https://localhost:7065';
     } else {
-      apiConfiguration.rootUrl = window.document.baseURI;
+      apiConfiguration.rootUrl = 'https://custplace.ru';
     }
+
+    console.log(apiConfiguration.rootUrl);
+
   }
 }
