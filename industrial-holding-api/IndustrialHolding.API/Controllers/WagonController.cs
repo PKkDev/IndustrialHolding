@@ -150,7 +150,7 @@ namespace IndustrialHolding.API.Controllers
                     item.SetStatus(WagonItemStatus.BROS);
             }
 
-            return Ok(list.OrderBy(x => x.Order));
+            return Ok(list.OrderBy(x => x.Order).ThenByDescending(x => x.LastWay?.HourInWay));
         }
 
         [HttpGet("way-list")]

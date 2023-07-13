@@ -50,7 +50,7 @@ export class WagonVoyagesViewComponent implements OnInit, OnDestroy {
   }
 
   private intYMap() {
-    console.log('this.ymaps', this.ymaps);
+    // console.log('this.ymaps', this.ymaps);
 
     this.ymaps.ready(() => {
       this.myMap = new this.ymaps.Map("map", {
@@ -118,7 +118,7 @@ export class WagonVoyagesViewComponent implements OnInit, OnDestroy {
       });
       this.myMap.controls.add(listBox, { float: 'left' });
 
-      console.log('this.myMap', this.myMap);
+      // console.log('this.myMap', this.myMap);
     });
   }
 
