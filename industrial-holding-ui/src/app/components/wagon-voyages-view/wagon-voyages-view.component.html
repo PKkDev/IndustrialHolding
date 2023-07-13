@@ -1,6 +1,6 @@
-<div *ngIf="wagon">
+<div>
 
-  <div class="card ant-card" *ngFor="let voyage of wagon.voyages" (click)="onView(voyage)">
+  <div class="card ant-card" *ngFor="let voyage of ways" (click)="onView(voyage)">
 
     Время отправления: {{voyage.startDate | date: 'dd.MM.yyyy HH:mm'}}
     <br>

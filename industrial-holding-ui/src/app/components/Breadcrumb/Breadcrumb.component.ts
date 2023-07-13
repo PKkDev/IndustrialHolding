@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventType, Router } from '@angular/router';
-
-interface BreadcrumbItem {
-  title: string;
-  path?: string;
-  isActive: boolean
-}
+import { URL_PATH_MAP, URL_TITLE_MAP } from './Breadcrumb.constants';
+import { BreadcrumbItem } from './model';
 
 @Component({
   selector: 'app-Breadcrumb',
@@ -36,24 +32,13 @@ export class BreadcrumbComponent implements OnInit {
 
     for (let i = 0; i < arr.length; i++) {
       this.breadcrumbs.push({
-        title: urlTitleMap[arr[i]] ?? arr[i],
-        path: urlPthMap[arr[i]],
+        title: URL_TITLE_MAP[arr[i]] ?? arr[i],
+        path: URL_PATH_MAP[arr[i]],
         isActive: i == arr.length - 1
       })
     }
-    console.log(this.breadcrumbs);
   }
 
 }
 
-const urlTitleMap: Record<string, string> = {
-  '': 'Главная',
-  'wagons': 'Вагоны',
-  'files-upload': 'Загрузка файлов',
-  'files-list': 'Загруженные файлы'
-}
 
-const urlPthMap: Record<string, string> = {
-  '': 'wagons',
-  'wagons': 'wagons',
-}

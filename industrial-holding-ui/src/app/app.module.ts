@@ -14,6 +14,13 @@ import { WagonVoyagesViewComponent } from './components/wagon-voyages-view/wagon
 import { BreadcrumbComponent } from './components/Breadcrumb/Breadcrumb.component';
 import { ByteConverterPipe } from './pipes/byte-converter.pipe';
 import { HttpInterceptorProviders } from './interceptor';
+import { SettingsComponent } from './components/settings/settings.component';
+import { HourConverterPipe } from './pipes/hour-converter.pipe';
+import { registerLocaleData } from '@angular/common';
+
+
+import localRu from '@angular/common/locales/ru';
+registerLocaleData(localRu);
 
 @NgModule({
   declarations: [
@@ -26,13 +33,14 @@ import { HttpInterceptorProviders } from './interceptor';
     FilesListComponent,
     WagonVoyagesViewComponent,
     BreadcrumbComponent,
-    ByteConverterPipe
+    ByteConverterPipe,
+    SettingsComponent,
+    HourConverterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ApiModule.forRoot({ rootUrl: 'https://localhost:7065' }),
   ],
   providers: [
     HttpInterceptorProviders

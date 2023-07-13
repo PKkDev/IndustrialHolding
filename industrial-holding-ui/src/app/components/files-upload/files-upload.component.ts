@@ -43,6 +43,7 @@ export class FilesUploadComponent implements OnInit {
 
   public async onSendFile(file: FileUploadModel) {
     file.state = FileUploadState.InProcess;
+    file.error = undefined;
     const request = this.api.apiFilesUploadPost({
       body: { files: [file.file] }
     });

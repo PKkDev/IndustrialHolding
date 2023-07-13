@@ -1,40 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { VoyagesItem, WagonItem } from 'src/app/api/models';
-import { TestService } from 'src/app/api/services';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { VoyagesItemDto } from 'src/app/api/models';
+import { WagonService } from 'src/app/api/services';
+import { MULTI_ROUTER_SETTINGS } from 'src/app/constants/y-map';
 
 @Component({
   selector: 'app-wagon-voyages-view',
   templateUrl: './wagon-voyages-view.component.html',
   styleUrls: ['./wagon-voyages-view.component.scss']
 })
-export class WagonVoyagesViewComponent implements OnInit {
+export class WagonVoyagesViewComponent implements OnInit, OnDestroy {
 
-  public wagon: WagonItem | undefined;
+  public ways: VoyagesItemDto[] = [];
+  private wagonNumber: number | undefined;
+
+  private loadDataSubs?: Subscription
 
   private ymaps = (window as any).ymaps;
   private myMap: any | undefined;
   private multiRoute: any | undefined;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private testService: TestService
+    private api: WagonService
   ) { }
 
   ngOnInit() {
-
     const number = this.activatedRoute.snapshot.paramMap.get('number')
+    this.wagonNumber = +number!;
 
-    this.testService.apiTestListGet().subscribe({
-      next: (value: WagonItem[]) => {
-        this.wagon = value.find(x => x.number == +number!);
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
+    this.loadData();
+    this.intYMap();
+  }
 
+  ngOnDestroy() {
+    this.loadDataSubs?.unsubscribe();
+  }
+
+  private loadData() {
+    this.loadDataSubs = this.api.apiWagonWayListGet(
+      { wagonNumber: this.wagonNumber })
+      .subscribe({
+        next: (value: VoyagesItemDto[]) => {
+          this.ways = value;
+        },
+        error: (err) => { },
+      });
+  }
+
+  private intYMap() {
     console.log('this.ymaps', this.ymaps);
 
     this.ymaps.ready(() => {
@@ -97,7 +112,6 @@ export class WagonVoyagesViewComponent implements OnInit {
           title: 'Выбрать режим'
         },
         options: {
-
           layout: ListBoxLayout,
           itemLayout: ListBoxItemLayout
         }
@@ -108,52 +122,25 @@ export class WagonVoyagesViewComponent implements OnInit {
     });
   }
 
-  public onView(voyage: VoyagesItem) {
-
-    if (this.multiRoute) {
+  public onView(voyage: VoyagesItemDto) {
+    if (this.multiRoute)
       this.myMap.geoObjects.remove(this.multiRoute);
-      this.multiRoute = null
-    }
 
     const stations = voyage.operations?.map(x => 'станция ' + x.operStation);
-    stations?.unshift(voyage.startStation!);
+    stations?.unshift('станция ' + voyage.startStation!);
+    console.log(stations);
 
-    this.multiRoute = new this.ymaps.multiRouter.MultiRoute({
-      referencePoints: stations,
+    this.multiRoute = new this.ymaps.multiRouter
+      .MultiRoute(
+        {
+          referencePoints: stations,
+          params: {
+            routingMode: "auto"
+          }
+        },
+        MULTI_ROUTER_SETTINGS);
 
-      // referencePoints: [
-      //   'станция Сексеул',
-      //   'станция Журын'
-      // ]
-
-      // referencePoints: [
-      //   // 'Ахунбабаева',
-      //   // 'Туркестан',
-
-      //   // 'Киргили',
-      //   // 'Койты'
-
-      //   // [40.456557, 71.751571],
-      //   // [43.285665, 68.212742]
-      // ]
-      params: {
-        routingMode: "auto"
-      }
-    }, {
-      // Внешний вид путевых точек.
-      wayPointStartIconColor: "#FFFFFF",
-      wayPointStartIconFillColor: "#B3B3B3",
-      // Внешний вид линии активного маршрута.
-      routeActiveStrokeWidth: 8,
-      routeActiveStrokeStyle: 'solid',
-      routeActiveStrokeColor: "#002233",
-      // Внешний вид линий альтернативных маршрутов.
-      routeStrokeStyle: 'dot',
-      routeStrokeWidth: 3,
-      boundsAutoApply: true
-    });
     this.myMap.geoObjects.add(this.multiRoute);
-
   }
 
 }

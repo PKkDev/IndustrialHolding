@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
-export { OperationsItem } from './models/operations-item';
+export { LastVoyagesItemDto } from './models/last-voyages-item-dto';
+export { OperationsItemDto } from './models/operations-item-dto';
 export { ProblemDetails } from './models/problem-details';
-export { VoyagesItem } from './models/voyages-item';
-export { WagonItem } from './models/wagon-item';
+export { VoyagesItemDto } from './models/voyages-item-dto';
+export { WagonItemDto } from './models/wagon-item-dto';
+export { WagonItemStatus } from './models/wagon-item-status';

@@ -21,6 +21,12 @@ namespace IndustrialHolding.Data.Npg.Entities
         [Column("endStation")]
         public string? EndStation { get; set; }
 
+        [Column("lastOperDate")]
+        public DateTime LastOperDate { get; set; }
+
+        [Column("hourInWay")]
+        public int HourInWay { get; set; }
+
         public List<Operation> Operations { get; set; }
 
         [Column("wagonId")]

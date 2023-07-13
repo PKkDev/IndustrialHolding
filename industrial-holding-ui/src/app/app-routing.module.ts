@@ -5,6 +5,7 @@ import { FilesListComponent } from './components/files-list/files-list.component
 import { FilesUploadComponent } from './components/files-upload/files-upload.component';
 import { WagonListViewComponent } from './components/wagon-list-view/wagon-list-view.component';
 import { WagonVoyagesViewComponent } from './components/wagon-voyages-view/wagon-voyages-view.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'files-list',
         component: FilesListComponent
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent
       }
     ]
   }

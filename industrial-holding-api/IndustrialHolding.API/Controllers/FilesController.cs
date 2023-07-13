@@ -30,8 +30,8 @@ namespace IndustrialHolding.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
         public IActionResult List()
         {
-            string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
-            DirectoryInfo fileDir = new(filesPath);
+            DirectoryInfo fileDir = GetLocalDirectory();
+
             if (!fileDir.Exists)
             {
                 fileDir.Create();
@@ -49,8 +49,7 @@ namespace IndustrialHolding.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
         public IActionResult Download([FromQuery] string fileName)
         {
-            string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
-            DirectoryInfo fileDir = new(filesPath);
+            DirectoryInfo fileDir = GetLocalDirectory();
             if (!fileDir.Exists)
                 throw new Exception("файл не найден");
 
@@ -70,8 +69,7 @@ namespace IndustrialHolding.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Remove([FromQuery] string fileName)
         {
-            string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
-            DirectoryInfo fileDir = new(filesPath);
+            DirectoryInfo fileDir = GetLocalDirectory();
             if (!fileDir.Exists)
                 throw new Exception("файл не найден");
 
@@ -94,11 +92,10 @@ namespace IndustrialHolding.API.Controllers
         {
             var file = files[0];
 
-            string filesPath = Path.Combine(AppContext.BaseDirectory, $"Files");
-            DirectoryInfo fileDir = new(filesPath);
+            DirectoryInfo fileDir = GetLocalDirectory();
             if (!fileDir.Exists) fileDir.Create();
 
-            string pathToFile = Path.Combine(filesPath, $"{file.FileName}");
+            string pathToFile = Path.Combine(fileDir.FullName, $"{file.FileName}");
             using FileStream fileStream = new(pathToFile, FileMode.Create);
             await file.CopyToAsync(fileStream);
             fileStream.Flush();
@@ -116,6 +113,7 @@ namespace IndustrialHolding.API.Controllers
             foreach (var opertion in opertions)
             {
                 opertion.EndStation = opertion.EndStation != null && opertion.EndStation.Equals("0") ? null : opertion.EndStation;
+                opertion.RemainingDistance ??= 0;
             }
 
             foreach (var operation in opertions)
@@ -134,28 +132,49 @@ namespace IndustrialHolding.API.Controllers
                     await _context.SaveChangesAsync();
                 }
 
-                var voyage = await _context.Way
+                var way = await _context.Way
                     .FirstOrDefaultAsync(x
                     => x.StartDate == operation.FlightStart
-                    && x.EndStation == operation.EndStation
                     && x.StartStation == operation.StartStation
                     && x.WagonId == wagon.Id);
 
-                if (voyage == null)
+                if (way == null)
                 {
-                    voyage = new Way()
+                    way = new Way()
                     {
                         StartDate = operation.FlightStart,
                         EndStation = operation.EndStation,
-                        StartStation = operation.StartStation
+                        StartStation = operation.StartStation,
+
+                        LastOperDate = operation.OperDateTime,
+                        HourInWay = (int)(operation.OperDateTime - operation.FlightStart).TotalHours
                     };
 
-                    wagon.Voyages.Add(voyage);
+                    wagon.Voyages.Add(way);
                     await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(way.EndStation) && !string.IsNullOrEmpty(operation.EndStation))
+                    {
+                        way.EndStation = operation.EndStation;
+
+                        _context.Way.Update(way);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    if (operation.OperDateTime > way.LastOperDate)
+                    {
+                        way.LastOperDate = operation.OperDateTime;
+                        way.HourInWay = (int)(operation.OperDateTime - operation.FlightStart).TotalHours;
+
+                        _context.Way.Update(way);
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 var action = await _context.Operation
-                    .FirstOrDefaultAsync(x => x.Name == operation.OperationName && x.VoyageId == voyage.Id);
+                    .FirstOrDefaultAsync(x => x.Name == operation.OperationName && x.VoyageId == way.Id);
 
                 if (action == null)
                 {
@@ -165,11 +184,11 @@ namespace IndustrialHolding.API.Controllers
                         OperStation = operation.OperStation,
                         OperDate = operation.OperDateTime,
                         DaysWithoutMovement = operation.DaysWithoutMovement,
-                        RemainingDistance = operation.RemainingDistance,
+                        RemainingDistance = operation.RemainingDistance ?? 0,
                         TrainNumber = operation.TrainNumber
                     };
 
-                    voyage.Operations.Add(action);
+                    way.Operations.Add(action);
                     await _context.SaveChangesAsync();
                 }
 
@@ -177,6 +196,13 @@ namespace IndustrialHolding.API.Controllers
             }
 
             return Ok(200);
+        }
+
+        private DirectoryInfo GetLocalDirectory()
+        {
+            string directoryPath = Path.Combine(AppContext.BaseDirectory, $"Files");
+            DirectoryInfo directory = new(directoryPath);
+            return directory;
         }
     }
 }

@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface OperationsItem {
+export interface OperationsItemDto {
   daysWithoutMovement?: number;
   id?: number;
   name?: string;

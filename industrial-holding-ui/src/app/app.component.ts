@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ApiConfiguration } from './api/api-configuration';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,14 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent {
 
-  constructor(title: Title) {
-    title.setTitle('Industrial Holding')
+  constructor(title: Title, private apiConfiguration: ApiConfiguration) {
+
+    title.setTitle('Industrial Holding');
+
+    if (isDevMode()) {
+      apiConfiguration.rootUrl = 'https://localhost:7065';
+    } else {
+      apiConfiguration.rootUrl = window.document.baseURI;
+    }
   }
 }

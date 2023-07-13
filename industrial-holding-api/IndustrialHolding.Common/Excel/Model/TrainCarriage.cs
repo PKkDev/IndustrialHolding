@@ -85,8 +85,8 @@ namespace IndustrialHolding.Console.Test
         /// <summary>
         /// Оставшееся расстояние
         /// </summary>
-        [ExcelColumn(14)]
-        public double RemainingDistance { get; set; }
+        [ExcelColumn(14, true)]
+        public double? RemainingDistance { get; set; }
 
         /// <summary>
         /// Станция назначения

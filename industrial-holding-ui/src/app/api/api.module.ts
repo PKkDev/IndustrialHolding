@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { FilesService } from './services/files.service';
-import { TestService } from './services/test.service';
+import { SettingsService } from './services/settings.service';
+import { WagonService } from './services/wagon.service';
 
 /**
  * Module that provides all services and configuration.
@@ -16,7 +17,8 @@ import { TestService } from './services/test.service';
   declarations: [],
   providers: [
     FilesService,
-    TestService,
+    SettingsService,
+    WagonService,
     ApiConfiguration
   ],
 })

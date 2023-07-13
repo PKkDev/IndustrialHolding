@@ -1,10 +1,11 @@
 /* tslint:disable */
 /* eslint-disable */
-import { OperationsItem } from './operations-item';
-export interface VoyagesItem {
+export interface LastVoyagesItemDto {
   endStation?: string;
+  hourInWay?: number;
   id?: number;
-  operations?: Array<OperationsItem>;
+  lastOperations?: string;
+  lastOperationsDate?: string;
   startDate?: string;
   startStation?: string;
 }
