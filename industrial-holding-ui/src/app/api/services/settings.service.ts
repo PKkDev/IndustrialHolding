@@ -17,21 +17,25 @@ export class SettingsService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `apiSettingsGet()` */
-  static readonly ApiSettingsGetPath = '/api/settings';
+  /** Path part for operation `apiSettingsRestoreDbGet()` */
+  static readonly ApiSettingsRestoreDbGetPath = '/api/settings/restoreDB';
 
   /**
+   * Пересоздать базу данных.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSettingsGet()` instead.
+   * To access only the response body, use `apiSettingsRestoreDbGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSettingsGet$Response(
+  apiSettingsRestoreDbGet$Response(
     params?: {
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<void>> {
-    const rb = new RequestBuilder(this.rootUrl, SettingsService.ApiSettingsGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SettingsService.ApiSettingsRestoreDbGetPath, 'get');
     if (params) {
     }
 
@@ -46,17 +50,21 @@ export class SettingsService extends BaseService {
   }
 
   /**
+   * Пересоздать базу данных.
+   *
+   *
+   *
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSettingsGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiSettingsRestoreDbGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSettingsGet(
+  apiSettingsRestoreDbGet(
     params?: {
     },
     context?: HttpContext
   ): Observable<void> {
-    return this.apiSettingsGet$Response(params, context).pipe(
+    return this.apiSettingsRestoreDbGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

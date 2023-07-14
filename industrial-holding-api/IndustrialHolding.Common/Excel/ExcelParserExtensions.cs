@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using System.Reflection;
-using IndustrialHolding.Common.Excel.Attributes;
+using IndustrialHolding.Common.Excel.Attributes; 
 
 namespace IndustrialHolding.Common.Excel
 {

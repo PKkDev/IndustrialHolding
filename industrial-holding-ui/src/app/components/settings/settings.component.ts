@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (!window.confirm('точно?')) return;
     if (!window.confirm('все данные будут удалены, продолжить?')) return;
 
-    this.clearDBSubs = this.api.apiSettingsGet()
+    this.clearDBSubs = this.api.apiSettingsRestoreDbGet()
       .subscribe({
         next: (value: any) => { },
         error: (err) => { },

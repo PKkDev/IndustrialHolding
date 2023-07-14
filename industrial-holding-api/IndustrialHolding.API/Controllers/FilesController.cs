@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using IndustrialHolding.Common.Excel;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mime;
+using System.IO.Compression;
 
 namespace IndustrialHolding.API.Controllers
 {
+    /// <summary>
+    /// Обработка запросов для работы с файлами
+    /// </summary>
     [Route("api/files")]
     [ApiController]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -17,6 +21,11 @@ namespace IndustrialHolding.API.Controllers
         private readonly DataContext _context;
         private readonly ILogger<FilesController> _logger;
 
+        /// <summary>
+        /// Инициализация
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="context"></param>
         public FilesController(
             ILogger<FilesController> logger,
             DataContext context)
@@ -25,6 +34,10 @@ namespace IndustrialHolding.API.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Получить список всех загруженных файлов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("list")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
@@ -39,19 +52,24 @@ namespace IndustrialHolding.API.Controllers
             }
             else
             {
-                var files = fileDir.GetFiles();
+                var files = fileDir.GetFiles("*.xlsx");
                 return Ok(files.Select(x => x.Name));
             }
         }
 
-        [HttpGet("download")]
+        /// <summary>
+        /// Загрузить файл с срвера
+        /// </summary>
+        /// <param name="fileName">Имя файла</param>
+        /// <returns></returns> 
+        [HttpGet("download/file")]
         [Produces(MediaTypeNames.Application.Octet)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
         public IActionResult Download([FromQuery] string fileName)
         {
             DirectoryInfo fileDir = GetLocalDirectory();
             if (!fileDir.Exists)
-                throw new Exception("файл не найден");
+                throw new Exception("Директория не найдена");
 
             var files = fileDir.GetFiles(fileName, SearchOption.AllDirectories);
 
@@ -61,9 +79,38 @@ namespace IndustrialHolding.API.Controllers
             var file = files.First();
             var bytes = System.IO.File.ReadAllBytes(file.FullName);
             return File(bytes, MediaTypeNames.Application.Octet, file.Name);
-            // return File(bytes, "application/vnd.ms-excel");
         }
 
+        /// <summary>
+        /// Загрузить все фйлы с сервера в формате .zip
+        /// </summary>
+        /// <returns></returns> 
+        [HttpGet("download/all/zip")]
+        [Produces(MediaTypeNames.Application.Zip)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
+        public IActionResult DownloadAllZip()
+        {
+            DirectoryInfo fileDir = GetLocalDirectory();
+            if (!fileDir.Exists)
+                throw new Exception("Директория не найдена");
+
+            var zipName = $"files_{DateTime.Now:yyyy-MM-dd-HH-mm:ss}.zip";
+            var zipPath = Path.Combine(fileDir.Parent.FullName, zipName);
+            FileInfo zipFileInfo = new(zipPath);
+            if (zipFileInfo.Exists)
+                zipFileInfo.Delete();
+
+            ZipFile.CreateFromDirectory(fileDir.FullName, zipPath, CompressionLevel.Optimal, false);
+
+            var bytes = System.IO.File.ReadAllBytes(zipPath);
+            return File(bytes, MediaTypeNames.Application.Zip, zipName);
+        }
+
+        /// <summary>
+        /// Удаление файла с сервера
+        /// </summary>
+        /// <param name="fileName">Имя файла</param>
+        /// <returns></returns> 
         [HttpGet("remove")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -84,6 +131,11 @@ namespace IndustrialHolding.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Загрузить файл на сервер для обработки
+        /// </summary>
+        /// <param name="files">Файлы</param>
+        /// <returns></returns>
         [HttpPost("upload")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -191,18 +243,19 @@ namespace IndustrialHolding.API.Controllers
                     way.Operations.Add(action);
                     await _context.SaveChangesAsync();
                 }
-
-
             }
 
-            return Ok(200);
+            return Ok("accepted");
         }
 
+        /// <summary>
+        /// ПОлучение директории - хрнилище файлов
+        /// </summary>
+        /// <returns></returns>
         private DirectoryInfo GetLocalDirectory()
         {
             string directoryPath = Path.Combine(AppContext.BaseDirectory, $"Files");
-            DirectoryInfo directory = new(directoryPath);
-            return directory;
+            return new(directoryPath);
         }
     }
 }

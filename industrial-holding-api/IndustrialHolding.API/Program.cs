@@ -24,6 +24,7 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin();
             policy.AllowAnyMethod();
+            policy.WithExposedHeaders("Content-Disposition");
         });
 });
 

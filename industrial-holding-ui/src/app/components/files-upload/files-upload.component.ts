@@ -15,6 +15,8 @@ export class FilesUploadComponent implements OnInit {
 
   public files: FileUploadModel[] = [];
 
+  public allFilesIsLoading: boolean = false;
+
   constructor(private api: FilesService) { }
 
   ngOnInit() { }
@@ -35,10 +37,12 @@ export class FilesUploadComponent implements OnInit {
   }
 
   public async onSendAllFile() {
+    this.allFilesIsLoading = true;
     for (const file of this.files) {
       if (file.state != FileUploadState.Done)
         await this.onSendFile(file);
     }
+    this.allFilesIsLoading = false;
   }
 
   public async onSendFile(file: FileUploadModel) {

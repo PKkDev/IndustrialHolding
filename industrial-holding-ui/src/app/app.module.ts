@@ -18,6 +18,8 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { HourConverterPipe } from './pipes/hour-converter.pipe';
 import { registerLocaleData } from '@angular/common';
 
+import { NgcButtonDirective } from './directives/ngc-button.directive';
+import { NgcIconDirective } from './directives/ngc-icon.directive';
 
 import localRu from '@angular/common/locales/ru';
 registerLocaleData(localRu);
@@ -35,7 +37,9 @@ registerLocaleData(localRu);
     BreadcrumbComponent,
     ByteConverterPipe,
     SettingsComponent,
-    HourConverterPipe
+    HourConverterPipe,
+    NgcButtonDirective,
+    NgcIconDirective
   ],
   imports: [
     BrowserModule,

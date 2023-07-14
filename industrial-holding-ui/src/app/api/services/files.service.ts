@@ -21,6 +21,10 @@ export class FilesService extends BaseService {
   static readonly ApiFilesListGetPath = '/api/files/list';
 
   /**
+   * Получить список всех загруженных файлов.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiFilesListGet()` instead.
    *
@@ -46,6 +50,10 @@ export class FilesService extends BaseService {
   }
 
   /**
+   * Получить список всех загруженных файлов.
+   *
+   *
+   *
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `apiFilesListGet$Response()` instead.
    *
@@ -61,24 +69,32 @@ export class FilesService extends BaseService {
     );
   }
 
-  /** Path part for operation `apiFilesDownloadGet()` */
-  static readonly ApiFilesDownloadGetPath = '/api/files/download';
+  /** Path part for operation `apiFilesDownloadFileGet()` */
+  static readonly ApiFilesDownloadFileGetPath = '/api/files/download/file';
 
   /**
+   * Загрузить файл с срвера.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiFilesDownloadGet()` instead.
+   * To access only the response body, use `apiFilesDownloadFileGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFilesDownloadGet$Response(
+  apiFilesDownloadFileGet$Response(
     params?: {
+
+      /**
+       * Имя файла
+       */
       fileName?: string;
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<Blob>> {
-    const rb = new RequestBuilder(this.rootUrl, FilesService.ApiFilesDownloadGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, FilesService.ApiFilesDownloadFileGetPath, 'get');
     if (params) {
-      rb.query('fileName', params.fileName, {"style":"form"});
+      rb.query('fileName', params.fileName, { "style": "form" });
     }
 
     return this.http.request(
@@ -92,18 +108,78 @@ export class FilesService extends BaseService {
   }
 
   /**
+   * Загрузить файл с срвера.
+   *
+   *
+   *
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiFilesDownloadGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiFilesDownloadFileGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFilesDownloadGet(
+  apiFilesDownloadFileGet(
     params?: {
+
+      /**
+       * Имя файла
+       */
       fileName?: string;
     },
     context?: HttpContext
   ): Observable<Blob> {
-    return this.apiFilesDownloadGet$Response(params, context).pipe(
+    return this.apiFilesDownloadFileGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Blob>): Blob => r.body)
+    );
+  }
+
+  /** Path part for operation `apiFilesDownloadAllZipGet()` */
+  static readonly ApiFilesDownloadAllZipGetPath = '/api/files/download/all/zip';
+
+  /**
+   * Загрузить все фйлы с сервера в формате .zip.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiFilesDownloadAllZipGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFilesDownloadAllZipGet$Response(
+    params?: {
+    },
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<Blob>> {
+    const rb = new RequestBuilder(this.rootUrl, FilesService.ApiFilesDownloadAllZipGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(
+      rb.build({ responseType: 'blob', accept: 'application/zip', context })
+    ).pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Blob>;
+      })
+    );
+  }
+
+  /**
+   * Загрузить все фйлы с сервера в формате .zip.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiFilesDownloadAllZipGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFilesDownloadAllZipGet(
+    params?: {
+    },
+    context?: HttpContext
+  ): Observable<Blob> {
+    return this.apiFilesDownloadAllZipGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<Blob>): Blob => r.body)
     );
   }
@@ -112,6 +188,10 @@ export class FilesService extends BaseService {
   static readonly ApiFilesRemoveGetPath = '/api/files/remove';
 
   /**
+   * Удаление файла с сервера.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiFilesRemoveGet()` instead.
    *
@@ -119,13 +199,17 @@ export class FilesService extends BaseService {
    */
   apiFilesRemoveGet$Response(
     params?: {
+
+      /**
+       * Имя файла
+       */
       fileName?: string;
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<void>> {
     const rb = new RequestBuilder(this.rootUrl, FilesService.ApiFilesRemoveGetPath, 'get');
     if (params) {
-      rb.query('fileName', params.fileName, {"style":"form"});
+      rb.query('fileName', params.fileName, { "style": "form" });
     }
 
     return this.http.request(
@@ -139,6 +223,10 @@ export class FilesService extends BaseService {
   }
 
   /**
+   * Удаление файла с сервера.
+   *
+   *
+   *
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `apiFilesRemoveGet$Response()` instead.
    *
@@ -146,6 +234,10 @@ export class FilesService extends BaseService {
    */
   apiFilesRemoveGet(
     params?: {
+
+      /**
+       * Имя файла
+       */
       fileName?: string;
     },
     context?: HttpContext
@@ -159,6 +251,10 @@ export class FilesService extends BaseService {
   static readonly ApiFilesUploadPostPath = '/api/files/upload';
 
   /**
+   * Загрузить файл на сервер для обработки.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiFilesUploadPost()` instead.
    *
@@ -167,8 +263,8 @@ export class FilesService extends BaseService {
   apiFilesUploadPost$Response(
     params?: {
       body?: {
-'files'?: Array<Blob>;
-}
+        'files'?: Array<Blob>;
+      }
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<void>> {
@@ -188,6 +284,10 @@ export class FilesService extends BaseService {
   }
 
   /**
+   * Загрузить файл на сервер для обработки.
+   *
+   *
+   *
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `apiFilesUploadPost$Response()` instead.
    *
@@ -196,8 +296,8 @@ export class FilesService extends BaseService {
   apiFilesUploadPost(
     params?: {
       body?: {
-'files'?: Array<Blob>;
-}
+        'files'?: Array<Blob>;
+      }
     },
     context?: HttpContext
   ): Observable<void> {

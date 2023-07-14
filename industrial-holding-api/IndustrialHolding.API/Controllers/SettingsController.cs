@@ -4,6 +4,9 @@ using System.Net.Mime;
 
 namespace IndustrialHolding.API.Controllers
 {
+    /// <summary>
+    /// Обработка запросов настроек
+    /// </summary>
     [Route("api/settings")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
@@ -21,7 +24,11 @@ namespace IndustrialHolding.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Пересоздать базу данных
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("restoreDB")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> RestoreDB()
         {
