@@ -10,5 +10,9 @@
         background: #ececec;
         height: 100%;
         width: calc(100% - 250px);
+
+        @media (max-width: 600px) {
+            width: 100%;
+        }
     }
 }

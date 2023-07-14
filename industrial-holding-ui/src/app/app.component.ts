@@ -15,6 +15,8 @@ export class AppComponent {
 
     if (isDevMode()) {
       apiConfiguration.rootUrl = 'https://localhost:7065';
+
+      apiConfiguration.rootUrl = 'https://custplace.ru';
     } else {
       apiConfiguration.rootUrl = 'https://custplace.ru';
     }

@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+  public menuIsOpen: boolean = false;
+
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  public changeMenuState() {
+    this.menuIsOpen = !this.menuIsOpen
   }
 
 }

@@ -4,6 +4,10 @@
     padding: 10px 20px;
     margin-bottom: 5px;
 
+    @media (max-width: 600px) {
+        padding: 10px 50px;
+    }
+
     .breadcrumb {
         color: #00000073;
         font-size: 14px;
