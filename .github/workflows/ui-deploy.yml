@@ -42,9 +42,10 @@ jobs:
         run: npm run build:prod
 
       - name: SFTP deploy
+        if: success()
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           localDir: "./dist/industrial-holding-ui"
