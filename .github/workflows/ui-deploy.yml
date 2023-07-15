@@ -25,27 +25,27 @@ jobs:
 
     steps:
 
-      - name: ui-build action
-        uses: IndustrialHolding/ui-build@v1
+#      - name: ui-build action
+#        uses: IndustrialHolding/ui-build@v1
 
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Setup Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#          cache: "npm"
-#          cache-dependency-path: "./industrial-holding-ui/package-lock.json"
-#
-#      - name: Run ci
-#        run: npm ci
-#
-#      - name: Run tests
-#        run: npm run test:prod
-#
-#      - name: Run lint
-#        run: npm run lint
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "./industrial-holding-ui/package-lock.json"
+
+      - name: Run ci
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:prod
+
+      - name: Run lint
+        run: npm run lint
 
       - name: Build
         run: npm run build:prod
