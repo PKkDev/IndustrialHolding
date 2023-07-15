@@ -45,8 +45,8 @@ jobs:
         if: success()
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          forceUpload: true,
-          removeExtraFilesOnServer: true,
+          forceUpload: true
+          removeExtraFilesOnServer: true
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
