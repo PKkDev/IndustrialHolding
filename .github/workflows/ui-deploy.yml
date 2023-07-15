@@ -1,4 +1,4 @@
-name: Continuous Deploy 
+name: Continuous Deploy
 
 on:
   push:
@@ -14,8 +14,8 @@ jobs:
       - name: SFTP uploader
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: '5.63.155.71'
-          username: 'root'
+          server: "5.63.155.71"
+          username: "root"
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          localDir: './build/*'
-          remoteDir: '/var/www/industrial-holding'
+          localDir: "./build/*"
+          remoteDir: "/var/www/industrial-holding"
