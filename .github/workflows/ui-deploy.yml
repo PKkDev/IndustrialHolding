@@ -43,18 +43,11 @@ jobs:
 
       - name: SFTP deploy
         if: success()
-        #uses: wangyucode/sftp-upload-action@v2.0.2
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          #forceUpload: true
-          #removeExtraFilesOnServer: true
-          #host: ${{ secrets.HOST }}
-          #username: ${{ secrets.USER }}
-          #password: ${{ secrets.PASSWORD }}
-          #localDir: "./industrial-holding-ui/dist/industrial-holding-ui"
-          #remoteDir: "/var/www/industrial-holding"
           server: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           local_path: "./industrial-holding-ui/dist/industrial-holding-ui/*"
           remote_path: "/var/www/industrial-holding"
+          delete_remote_files: tue
