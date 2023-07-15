@@ -38,3 +38,9 @@ jobs:
 
       - name: Publish
         run: dotnet publish IndustrialHolding.API/IndustrialHolding.API.csproj -c Release -o Release --sc true -r linux-x64
+
+      - name: Create File
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: "Release/appsettings.private.json"
+          FILE_DATA: ${{ secrets.APIPRIVATE }}
