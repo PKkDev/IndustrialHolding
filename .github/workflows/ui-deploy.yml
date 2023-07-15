@@ -38,7 +38,8 @@ jobs:
       - name: SFTP uploader
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: "5.63.155.71"
-          username: "root"
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
           localDir: "./build/*"
           remoteDir: "/var/www/industrial-holding"
