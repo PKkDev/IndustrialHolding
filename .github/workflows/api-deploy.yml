@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./industrial-holding-api/
+
     strategy:
       matrix:
         net-version: [6.0.x]
@@ -28,6 +32,6 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore
-        
+
       - name: Test
         run: dotnet test --no-build --verbosity normal
