@@ -35,3 +35,6 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --verbosity normal
+
+      - name: Publish
+        run: dotnet publish IndustrialHolding.API/IndustrialHolding.API.csproj -c Release -o Release --sc true -r linux-x64
