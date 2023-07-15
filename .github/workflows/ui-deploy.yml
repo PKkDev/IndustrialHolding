@@ -1,15 +1,15 @@
 name: UI Build + Test + Deploy
 
 on:
-  push:
-    branches: ["main", "dev/*"]
+  #push:
+    #branches: ["main", "dev/*"]
     #branches: ["release"]
-  pull_request:
-    branches: ["main", "dev/*"]
+  #pull_request:
+    #branches: ["main", "dev/*"]
     #branches: ["release"]
-  #pull_request_target:
-    #types: ["closed"]
-    #branches: ["release"]
+  pull_request_target:
+    types: ["closed"]
+    branches: ["release"]
 
 jobs:
   build:
@@ -56,11 +56,3 @@ jobs:
           local_path: "./industrial-holding-ui/dist/industrial-holding-ui/*"
           remote_path: "/var/www/industrial-holding"
           delete_remote_files: true
-
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          script: sudo systemctl stop industrial-holding.service

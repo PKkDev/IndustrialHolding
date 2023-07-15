@@ -60,3 +60,11 @@ jobs:
           local_path: "./industrial-holding-api/Release/*"
           remote_path: "/api-services/industrial-holding-api"
           delete_remote_files: true
+
+      - name: Restart api service
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          script: sudo systemctl restart industrial-holding.service
