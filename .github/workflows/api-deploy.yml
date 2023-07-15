@@ -42,5 +42,5 @@ jobs:
       - name: Create File
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: "Release/appsettings.private.json"
+          FILE_NAME: "./industrial-holding-api/Release/appsettings.private.json"
           FILE_DATA: ${{ secrets.APIPRIVATE }}
