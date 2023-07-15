@@ -2,9 +2,11 @@ name: API Build + Test + Deploy
 
 on:
   push:
-    branches: ["main"]
+    #branches: ["main", "dev/*"]
+    branches: ["release"]
   pull_request:
-    branches: ["main"]
+    #branches: ["main", "dev/*"]
+    branches: ["release"]
 
 jobs:
   build:
