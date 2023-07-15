@@ -44,3 +44,14 @@ jobs:
         env:
           FILE_NAME: "./industrial-holding-api/Release/appsettings.private.json"
           FILE_DATA: ${{ secrets.APIPRIVATE }}
+
+      - name: SFTP deploy
+        if: success()
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          local_path: "./industrial-holding-api/Release/*"
+          remote_path: "/api-services/industrial-holding-api"
+          delete_remote_files: false

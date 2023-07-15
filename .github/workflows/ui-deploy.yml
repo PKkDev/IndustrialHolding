@@ -52,4 +52,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local_path: "./industrial-holding-ui/dist/industrial-holding-ui/*"
           remote_path: "/var/www/industrial-holding"
-          delete_remote_files: tue
+          delete_remote_files: true
