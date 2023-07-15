@@ -63,4 +63,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-          script: whoami
+          script: sudo systemctl stop industrial-holding.service
