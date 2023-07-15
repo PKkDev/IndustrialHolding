@@ -1,4 +1,4 @@
-name: Continuous Deploy
+name: Build + Test + Deploy
 
 on:
   push:
@@ -47,5 +47,5 @@ jobs:
           server: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-          localDir: "dist/industrial-holding-ui/"
+          localDir: "dist/industrial-holding-ui"
           remoteDir: "/var/www/industrial-holding"
