@@ -1,12 +1,15 @@
 name: UI Build + Test + Deploy
 
 on:
-  push:
-    #branches: ["main", "dev/*"]
+  #push:
+  #branches: ["main", "dev/*"]
+  #branches: ["release"]
+  pull_request_target:
+    types: ["closed"]
     branches: ["release"]
   #pull_request:
-    #branches: ["main", "dev/*"]
-    #branches: ["release"]
+  #branches: ["main", "dev/*"]
+  #branches: ["release"]
 
 jobs:
   build:
