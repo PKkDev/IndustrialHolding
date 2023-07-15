@@ -26,7 +26,7 @@ jobs:
     steps:
 
       - name: api-build action
-        uses: actions/api-build@v1
+        uses: IndustrialHolding/api-build@v1
 
 #      - name: Checkout
 #        uses: actions/checkout@v3
