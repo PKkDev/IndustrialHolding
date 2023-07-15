@@ -48,7 +48,14 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "assets": [
+                {
+                  "input": "src/config/prod",
+                  "output": "assets/config/",
+                  "glob": "*.json"
+                }
+              ]
             },
             "development": {
               "buildOptimizer": false,
@@ -56,7 +63,14 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "assets": [
+                {
+                  "input": "src/config/dev",
+                  "output": "assets/config/",
+                  "glob": "*.json"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

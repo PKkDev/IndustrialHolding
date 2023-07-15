@@ -13,15 +13,14 @@ export class AppComponent {
 
     title.setTitle('Industrial Holding');
 
-    if (isDevMode()) {
-      apiConfiguration.rootUrl = 'https://localhost:7065';
+    // console.log(isDevMode());
+    // if (isDevMode()) {
+    //   apiConfiguration.rootUrl = 'https://localhost:7065';
+    // } else {
+    //   apiConfiguration.rootUrl = 'https://custplace.ru';
+    // }
 
-      // apiConfiguration.rootUrl = 'https://custplace.ru';
-    } else {
-      apiConfiguration.rootUrl = 'https://custplace.ru';
-    }
-
-    console.log(apiConfiguration.rootUrl);
+    // console.log(apiConfiguration.rootUrl);
 
   }
 }

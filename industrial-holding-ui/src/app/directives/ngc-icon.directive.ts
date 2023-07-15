@@ -1,9 +1,11 @@
-import { ContentChild, Directive, ElementRef, Renderer2 } from '@angular/core';
+import { ContentChild, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[ngc-icon]'
 })
-export class NgcIconDirective {
+export class NgcIconDirective implements OnInit {
+
+  @Input() color: string | undefined;
 
   private originSvgPath: string | undefined;
 
@@ -20,12 +22,16 @@ export class NgcIconDirective {
     this.renderer2.addClass(this.el.nativeElement, 'span-icon');
   }
 
+  ngOnInit() {
+    if (this.color) {
+      this.renderer2.setStyle(this.el.nativeElement, 'color', this.color);
+    }
+  }
+
   public setLoading() {
     if (this.svg) {
       this.renderer2.addClass(this.el.nativeElement, 'loading');
-
       const svgEl = (this.svg.nativeElement as SVGElement);
-
       this.originSvgPath = svgEl.innerHTML;
       svgEl.innerHTML = this.loadingSvgPath;
     }
@@ -34,9 +40,7 @@ export class NgcIconDirective {
   public unsetLoading() {
     if (this.svg) {
       this.renderer2.removeClass(this.el.nativeElement, 'loading');
-
       const svgEl = (this.svg.nativeElement as SVGElement);
-
       svgEl.innerHTML = this.originSvgPath!;
     }
   }

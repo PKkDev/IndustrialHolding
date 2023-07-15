@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,7 @@ import { NgcButtonDirective } from './directives/ngc-button.directive';
 import { NgcIconDirective } from './directives/ngc-icon.directive';
 
 import localRu from '@angular/common/locales/ru';
+import { AppSettingsService } from './services/app-settings.service';
 registerLocaleData(localRu);
 
 @NgModule({
@@ -47,6 +48,16 @@ registerLocaleData(localRu);
     HttpClientModule,
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppSettingsService],
+      useFactory: (appConfigService: AppSettingsService) => {
+        return () => {
+          return appConfigService.loadAppConfig();
+        };
+      }
+    },
     HttpInterceptorProviders
   ],
   bootstrap: [AppComponent]
