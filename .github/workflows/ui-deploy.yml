@@ -26,7 +26,7 @@ jobs:
     steps:
 
       - name: ui-build action
-        uses: actions/ui-build@v1
+        uses: IndustrialHolding/ui-build@v1
 
 #      - name: Checkout
 #        uses: actions/checkout@v3
