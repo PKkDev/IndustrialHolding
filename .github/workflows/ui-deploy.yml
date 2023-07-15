@@ -40,10 +40,7 @@ jobs:
 
       - name: Build
         run: npm run build:prod
-
-  publish:
-    runs-on: ubuntu-latest
-    steps:
+        
       - name: SFTP deploy
         if: success()
         uses: wangyucode/sftp-upload-action@v2.0.2
