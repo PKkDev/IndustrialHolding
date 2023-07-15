@@ -5,8 +5,9 @@
     "serve": "ng serve",
     "serve-host": "ng serve -o --host=192.168.50.99 --disable-host-check",
     "prod": "ng build --configuration production --base-href /industrial-holding/",
+    "ng-openapi-gen": "ng-openapi-gen --input http://localhost:5277/swagger/v1/swagger.json --output src/app/api",
     "test": "ng test",
-    "ng-openapi-gen": "ng-openapi-gen --input http://localhost:5277/swagger/v1/swagger.json --output src/app/api"
+    "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage"
   },
   "private": true,
   "dependencies": {

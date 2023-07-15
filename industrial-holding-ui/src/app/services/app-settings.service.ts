@@ -16,7 +16,7 @@ export class AppSettingsService {
   loadAppConfig() {
     const req = this.http.get<AppSettings>('assets/config/appsettings.json')
       .pipe(map((data: AppSettings) => {
-        console.log(data);
+        console.log('AppSettings', data);
         this.apiConfiguration.rootUrl = data.apiBaseUrl;
         this.appConfig = data;
         return data;
