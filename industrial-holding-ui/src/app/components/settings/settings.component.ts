@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SettingsService } from 'src/app/api/services';
 
@@ -7,14 +7,11 @@ import { SettingsService } from 'src/app/api/services';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnDestroy {
 
   private clearDBSubs?: Subscription;
 
   constructor(private api: SettingsService) { }
-
-  ngOnInit() {
-  }
 
   ngOnDestroy() {
     this.clearDBSubs?.unsubscribe();
@@ -26,8 +23,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     this.clearDBSubs = this.api.apiSettingsRestoreDbGet()
       .subscribe({
-        next: (value: any) => { },
-        error: (err) => { },
+        error: (err) => { console.error(err); },
       })
   }
 

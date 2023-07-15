@@ -1,7 +1,7 @@
 import { ContentChild, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[ngc-icon]'
+  selector: '[ngcIcon]'
 })
 export class NgcIconDirective implements OnInit {
 

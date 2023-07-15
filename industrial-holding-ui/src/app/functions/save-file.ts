@@ -7,8 +7,8 @@ export const parseFileName = (headers: HttpHeaders, nameDef: string): string => 
     const disposition = headers.get('content-disposition');
   
     if (disposition) {
-        var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        var matches = filenameRegex.exec(disposition);
+        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = filenameRegex.exec(disposition);
         if (matches != null && matches[1]) {
             fileName = matches[1].replace(/['"]/g, '');
         }
@@ -18,8 +18,8 @@ export const parseFileName = (headers: HttpHeaders, nameDef: string): string => 
 }
 
 export const SaveFile = (file: StrictHttpResponse<Blob>, fileName: string) => {
-    let url = window.URL.createObjectURL(file.body);
-    let a = document.createElement('a');
+    const url = window.URL.createObjectURL(file.body);
+    const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.href = url;

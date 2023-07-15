@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HourConverterPipe implements PipeTransform {
 
-  transform(value: number | undefined, args?: any): string {
+  transform(value: number | undefined): string {
 
     if (!value) return '';
 

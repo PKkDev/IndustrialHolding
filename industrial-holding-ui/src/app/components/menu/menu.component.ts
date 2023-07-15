@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
 
-  public menuIsOpen: boolean = false;
-
-  constructor() { }
-
-  ngOnInit() { }
+  public menuIsOpen = false;
 
   public changeMenuState() {
     this.menuIsOpen = !this.menuIsOpen

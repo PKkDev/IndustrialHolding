@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FilesService } from 'src/app/api/services';
 import { firstValueFrom } from 'rxjs';
 import { ApiError } from 'src/app/interceptor/model';
@@ -9,17 +9,16 @@ import { FileUploadModel, FileUploadState } from './model';
   templateUrl: './files-upload.component.html',
   styleUrls: ['./files-upload.component.scss']
 })
-export class FilesUploadComponent implements OnInit {
+export class FilesUploadComponent {
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
   public files: FileUploadModel[] = [];
 
-  public allFilesIsLoading: boolean = false;
+  public allFilesIsLoading = false;
 
   constructor(private api: FilesService) { }
 
-  ngOnInit() { }
 
   public onSelectFile() {
     this.fileInput?.nativeElement.click();

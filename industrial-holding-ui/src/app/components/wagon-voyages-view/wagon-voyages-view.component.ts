@@ -45,7 +45,7 @@ export class WagonVoyagesViewComponent implements OnInit, OnDestroy {
         next: (value: VoyagesItemDto[]) => {
           this.ways = value;
         },
-        error: (err) => { },
+        error: (err) => { console.error(err);},
       });
   }
 

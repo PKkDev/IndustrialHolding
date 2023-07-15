@@ -4,7 +4,7 @@ import { NgcIconDirective } from './ngc-icon.directive';
 export type NgcButtonType = 'default' | 'primary' | 'dangerous';
 
 @Directive({
-  selector: '[ngc-button]'
+  selector: '[ngcButton]'
 })
 export class NgcButtonDirective implements OnInit, OnChanges {
 
@@ -20,7 +20,7 @@ export class NgcButtonDirective implements OnInit, OnChanges {
   private loadingSpan: any | undefined;
 
   @Input() btnType: NgcButtonType = 'default';
-  @Input() loading: boolean = false;
+  @Input() loading = false;
 
   @ContentChild(NgcIconDirective) ngcIcon: NgcIconDirective | undefined;
 

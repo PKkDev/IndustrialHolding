@@ -19,7 +19,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
   private loadFilesSubs?: Subscription;
   private downloadFile?: Subscription;
 
-  public zipIsLoading: boolean = false;
+  public zipIsLoading = false;
 
   constructor(private api: FilesService) { }
 
@@ -40,7 +40,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
         next: (value: string[]) => {
           this.files = value.map(mapFileItem);
         },
-        error: (err) => { },
+        error: (err) => { console.error(err); },
       })
   }
 
@@ -52,7 +52,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
         next: (value: StrictHttpResponse<Blob>) => {
           SaveFile(value, parseFileName(value.headers, 'file.zip'));
         },
-        error: (err) => { },
+        error: (err) => { console.error(err); },
       });
   }
 
@@ -64,7 +64,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
         next: (value: StrictHttpResponse<Blob>) => {
           SaveFile(value, file.name);
         },
-        error: (err) => { },
+        error: (err) => { console.error(err); },
       });
   }
 
@@ -78,7 +78,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
         next: (value: any) => {
           this.loadFiles();
         },
-        error: (err) => { },
+        error: (err) => { console.error(err); },
       });
   }
 

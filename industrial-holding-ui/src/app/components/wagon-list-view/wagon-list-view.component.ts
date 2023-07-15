@@ -34,7 +34,7 @@ export class WagonListViewComponent implements OnInit, OnDestroy {
         next: (value: WagonItemDto[]) => {
           this.wagons = value;
         },
-        error: (err) => { },
+        error: (err) => { console.error(err);},
       })
   }
 

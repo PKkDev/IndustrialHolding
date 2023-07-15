@@ -4,7 +4,7 @@ import { URL_PATH_MAP, URL_TITLE_MAP } from './Breadcrumb.constants';
 import { BreadcrumbItem } from './model';
 
 @Component({
-  selector: 'app-Breadcrumb',
+  selector: 'app-breadcrumb',
   templateUrl: './Breadcrumb.component.html',
   styleUrls: ['./Breadcrumb.component.scss']
 })

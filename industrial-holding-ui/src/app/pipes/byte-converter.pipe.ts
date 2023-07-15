@@ -7,7 +7,7 @@ export class ByteConverterPipe implements PipeTransform {
 
   private units: string[] = ['Байт', 'КБ', 'МБ', 'ГБ', 'ТБ', 'ПБ'];
 
-  transform(value: number, args?: any): string {
+  transform(value: number): string {
 
     let l = 0;
     let n = value || 0;
