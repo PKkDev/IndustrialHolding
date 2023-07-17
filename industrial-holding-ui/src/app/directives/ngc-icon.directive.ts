@@ -1,11 +1,12 @@
-import { ContentChild, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, ContentChild, Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 
 @Directive({
   selector: '[ngcIcon]'
 })
-export class NgcIconDirective implements OnInit {
+export class NgcIconDirective implements OnInit, AfterViewInit, OnChanges {
 
   @Input() color: string | undefined;
+  @Input() loading = false;
 
   private originSvgPath: string | undefined;
 
@@ -28,9 +29,24 @@ export class NgcIconDirective implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    if (this.loading) {
+      this.setLoading();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['loading'] && !changes['loading'].firstChange) {
+      if (this.loading)
+        this.setLoading();
+      else
+        this.unsetLoading();
+    }
+  }
+
   public setLoading() {
     if (this.svg) {
-      this.renderer2.addClass(this.el.nativeElement, 'loading');
+      this.renderer2.addClass(this.el.nativeElement, 'ngc-loading');
       const svgEl = (this.svg.nativeElement as SVGElement);
       this.originSvgPath = svgEl.innerHTML;
       svgEl.innerHTML = this.loadingSvgPath;
@@ -39,7 +55,7 @@ export class NgcIconDirective implements OnInit {
 
   public unsetLoading() {
     if (this.svg) {
-      this.renderer2.removeClass(this.el.nativeElement, 'loading');
+      this.renderer2.removeClass(this.el.nativeElement, 'ngc-loading');
       const svgEl = (this.svg.nativeElement as SVGElement);
       svgEl.innerHTML = this.originSvgPath!;
     }

@@ -59,7 +59,7 @@ export class NgcButtonDirective implements OnInit, OnChanges {
           } else {
             const span = this.renderer2.createElement('span');
             this.renderer2.addClass(span, 'span-icon');
-            this.renderer2.addClass(span, 'loading');
+            this.renderer2.addClass(span, 'ngc-loading');
             span.innerHTML = this.loadingSvg
             this.loadingSpan = span;
             this.renderer2.appendChild(this.el.nativeElement, span);

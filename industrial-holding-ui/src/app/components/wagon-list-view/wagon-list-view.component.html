@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="card ant-card" *ngFor="let wagon of wagons" (click)="onGoToVoyages(wagon)">
+  <div class="card ngc-card ngc-card-hovered " *ngFor="let wagon of wagons" (click)="onGoToVoyages(wagon)">
 
     <div class="status-bar" *ngIf="wagon.status !== 'None'">
 

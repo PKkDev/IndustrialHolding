@@ -66,7 +66,7 @@
               "namedChunks": true,
               "assets": [
                 {
-                  "input": "src/config/dev",
+                  "input": "src/config/prod",
                   "output": "assets/config/",
                   "glob": "*.json"
                 }
