@@ -30,7 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/ngx-compack/assets/total.scss"
             ],
             "scripts": []
           },
@@ -66,7 +67,7 @@
               "namedChunks": true,
               "assets": [
                 {
-                  "input": "src/config/prod",
+                  "input": "src/config/dev",
                   "output": "assets/config/",
                   "glob": "*.json"
                 }

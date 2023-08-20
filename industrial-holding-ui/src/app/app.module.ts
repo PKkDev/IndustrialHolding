@@ -2,7 +2,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component'; 
+import { AppComponent } from './app.component';
 import { LayoutMainComponent } from './components/layout-main/layout-main.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -17,12 +17,12 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { HourConverterPipe } from './pipes/hour-converter.pipe';
 import { registerLocaleData } from '@angular/common';
 
-import { NgcButtonDirective } from './directives/ngc-button.directive';
-import { NgcIconDirective } from './directives/ngc-icon.directive';
-
 import localRu from '@angular/common/locales/ru';
 import { AppSettingsService } from './services/app-settings.service';
 registerLocaleData(localRu);
+
+// compack
+import { CompackButtonModule, CompackIconModule, CompackCardModule } from 'ngx-compack';
 
 @NgModule({
   declarations: [
@@ -38,13 +38,15 @@ registerLocaleData(localRu);
     ByteConverterPipe,
     SettingsComponent,
     HourConverterPipe,
-    NgcButtonDirective,
-    NgcIconDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+
+    CompackButtonModule,
+    CompackIconModule,
+    CompackCardModule
   ],
   providers: [
     {
