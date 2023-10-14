@@ -1,10 +1,10 @@
 <input [hidden]="true" #fileInput type="file" accept=".xlsx" multiple (change)="onFileSelectorChange($event)">
 
 <div class="tool">
-  <button ngcButton (click)="onSelectFile()">
+  <button cmp-button (click)="onSelectFile()">
     Добавить файл
   </button>
-  <button ngcButton btnType="primary" [loading]="allFilesIsLoading" [disabled]="files.length === 0"
+  <button cmp-button btnType="primary" [loading]="allFilesIsLoading" [disabled]="files.length === 0"
     (click)="onSendAllFile()">
     Отправить все файлы
   </button>
@@ -23,7 +23,7 @@
       <ng-container [ngSwitch]="file.state">
 
         <div class="span-icon-container" *ngSwitchCase="0">
-          <span ngcIcon color="#52c41a">
+          <span cmp-icon color="#52c41a">
             <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em"
               data-icon="check-circle" aria-hidden="true">
               <path
@@ -37,7 +37,7 @@
         </div>
 
         <div class="span-icon-container" *ngSwitchCase="1">
-          <span ngcIcon color="#eb2f96">
+          <span cmp-icon color="#eb2f96">
             <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em"
               data-icon="close-circle" aria-hidden="true">
               <path
@@ -51,7 +51,7 @@
         </div>
 
         <div class="span-icon-container" *ngSwitchCase="2">
-          <span ngcIcon class="loading">
+          <span cmp-icon [loading]="true">
             <svg viewBox="0 0 1024 1024" focusable="false" fill="currentColor" width="1em" height="1em"
               data-icon="loading" aria-hidden="true" class="anticon-spin">
               <path
@@ -62,7 +62,7 @@
         </div>
 
         <div class="span-icon-container" *ngSwitchCase="3">
-          <span ngcIcon color="#1890ff">
+          <span cmp-icon color="#1890ff">
             <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em"
               data-icon="clock-circle" aria-hidden="true">
               <path
@@ -77,8 +77,8 @@
 
       </ng-container>
 
-      <button class="ant-btn" [disabled]="file.state === 2 || file.state === 0" (click)="onSendFile(file)">
-        <span class="span-icon">
+      <button cmp-button [disabled]="file.state === 2 || file.state === 0" (click)="onSendFile(file)">
+        <span cmp-icon>
           <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="send"
             aria-hidden="true">
             <defs>
@@ -93,7 +93,7 @@
 
     </div>
 
-    <div class="ant-alert ant-alert-error" *ngIf="file.error">
+    <div class="ngc-alert ngc-alert-error" *ngIf="file.error">
       {{file.error}}
     </div>
 

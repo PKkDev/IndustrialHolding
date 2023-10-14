@@ -1,6 +1,6 @@
 <div>
 
-  <div class="card ant-card" *ngFor="let voyage of ways" (click)="onView(voyage)">
+  <compack-card *ngFor="let voyage of ways" (click)="onView(voyage)">
 
     Время отправления: {{voyage.startDate | date: 'dd.MM.yyyy HH:mm'}}
     <br>
@@ -15,7 +15,7 @@
       {{operation.daysWithoutMovement}}
     </div>
 
-  </div>
+  </compack-card>
 
 </div>
 

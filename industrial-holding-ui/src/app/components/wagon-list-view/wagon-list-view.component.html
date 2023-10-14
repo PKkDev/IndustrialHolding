@@ -1,44 +1,48 @@
 <div class="row">
 
-  <div class="card ant-card" *ngFor="let wagon of wagons" (click)="onGoToVoyages(wagon)">
+  <compack-card *ngFor="let wagon of wagons" (click)="onGoToVoyages(wagon)">
 
-    <div class="status-bar" *ngIf="wagon.status !== 'None'">
+    <div class=" ngc-card-hovered ">
 
-      <ng-container [ngSwitch]="wagon.status">
+      <div class="status-bar" *ngIf="wagon.status !== 'None'">
 
-        <div class="span-icon-container" *ngSwitchCase="'BROS'" [title]="wagon.statusTxt">
-          <span class="span-icon done">
-            <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="stop"
-              aria-hidden="true">
-              <path
-                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372 0-89 31.3-170.8 83.5-234.8l523.3 523.3C682.8 852.7 601 884 512 884zm288.5-137.2L277.2 223.5C341.2 171.3 423 140 512 140c205.4 0 372 166.6 372 372 0 89-31.3 170.8-83.5 234.8z">
-              </path>
-            </svg>
-          </span>
+        <ng-container [ngSwitch]="wagon.status">
+
+          <div class="span-icon-container" *ngSwitchCase="'BROS'" [title]="wagon.statusTxt">
+            <span class="span-icon done">
+              <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em"
+                data-icon="stop" aria-hidden="true">
+                <path
+                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372 0-89 31.3-170.8 83.5-234.8l523.3 523.3C682.8 852.7 601 884 512 884zm288.5-137.2L277.2 223.5C341.2 171.3 423 140 512 140c205.4 0 372 166.6 372 372 0 89-31.3 170.8-83.5 234.8z">
+                </path>
+              </svg>
+            </span>
+          </div>
+
+        </ng-container>
+
+      </div>
+
+      <span class="wagon">
+        Вагон: {{wagon.number}}
+      </span>
+
+      <div class="last-way" *ngIf="wagon.lastWay">
+
+        <div>
+          {{wagon.lastWay.startDate | date: 'dd.MM.yyyy HH:mm'}} ({{wagon.lastWay.hourInWay | hourConverter}})
         </div>
-
-      </ng-container>
-
-    </div>
-
-    <span class="wagon">
-      Вагон: {{wagon.number}}
-    </span>
-
-    <div class="last-way" *ngIf="wagon.lastWay">
-
-      <div>
-        {{wagon.lastWay.startDate | date: 'dd.MM.yyyy HH:mm'}} ({{wagon.lastWay.hourInWay | hourConverter}})
-      </div>
-      <div>
-        {{wagon.lastWay.startStation}} -> {{wagon.lastWay.endStation}}
-      </div>
-      <!-- <div>
+        <div>
+          {{wagon.lastWay.startStation}} -> {{wagon.lastWay.endStation}}
+        </div>
+        <!-- <div>
         {{wagon.lastWay.lastOperations}}
       </div> -->
 
+      </div>
+
     </div>
 
-  </div>
+  </compack-card>
 
 </div>

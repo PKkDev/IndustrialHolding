@@ -51,11 +51,25 @@ var app = builder.Build();
 
 app.UseExceptionHandler("/error");
 
-app.UseSwagger();
-app.UseSwaggerUI(options =>
+app.UseSwagger(opt =>
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-    options.RoutePrefix = "swagger";
+    if (builder.Environment.IsProduction())
+    {
+        opt.PreSerializeFilters.Add((swagger, httpReq) =>
+        {
+            //var serverUrl = $"{httpReq.Scheme}://{httpReq.Host}/indastrial-holding-api/";
+            var serverUrl = $"https://{httpReq.Host}/indastrial-holding-api/";
+            swagger.Servers = new List<OpenApiServer> {
+            new() { Url = serverUrl } };
+        });
+    }
+});
+app.UseSwaggerUI(opt =>
+{
+    if (builder.Environment.IsDevelopment())
+        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    else
+        opt.SwaggerEndpoint("/indastrial-holding-api/swagger/v1/swagger.json", "v1");
 });
 
 app.UseHttpsRedirection();
