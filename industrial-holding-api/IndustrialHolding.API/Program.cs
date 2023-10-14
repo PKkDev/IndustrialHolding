@@ -57,8 +57,8 @@ app.UseSwagger(opt =>
     {
         opt.PreSerializeFilters.Add((swagger, httpReq) =>
         {
-            //var serverUrl = $"{httpReq.Scheme}://{httpReq.Host}/ndastrial-holding-api/";
-            var serverUrl = $"https://{httpReq.Host}/ndastrial-holding-api/";
+            //var serverUrl = $"{httpReq.Scheme}://{httpReq.Host}/indastrial-holding-api/";
+            var serverUrl = $"https://{httpReq.Host}/indastrial-holding-api/";
             swagger.Servers = new List<OpenApiServer> {
             new() { Url = serverUrl } };
         });
@@ -69,7 +69,7 @@ app.UseSwaggerUI(opt =>
     if (builder.Environment.IsDevelopment())
         opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     else
-        opt.SwaggerEndpoint("/ndastrial-holding-api/swagger/v1/swagger.json", "v1");
+        opt.SwaggerEndpoint("/indastrial-holding-api/swagger/v1/swagger.json", "v1");
 });
 
 app.UseHttpsRedirection();
